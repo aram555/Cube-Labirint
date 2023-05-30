@@ -2,13 +2,22 @@
 
 public class MazeSpawner : MonoBehaviour
 {
+    [Header("Maze")]
     public Cell CellPrefab;
     public Vector3 CellSize = new Vector3(1,1,0);
+    [Header("Enemies and Dangerous")]
+    public GameObject enemies;
+    public int enemiesCount;
 
     public Maze maze;
 
     private void Start()
     {
+        CreateMaze();
+        CreateEnemies();
+    }
+
+    public void CreateMaze() {
         MazeGenerator generator = new MazeGenerator();
         maze = generator.GenerateMaze();
 
@@ -22,6 +31,16 @@ public class MazeSpawner : MonoBehaviour
                 c.WallBottom.SetActive(maze.cells[x, y].WallBottom);
             }
         }
+    }
 
+    public void CreateEnemies() {
+        for(int i = 0; i < enemiesCount; i++) {
+            GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
+            int random = Random.Range(0, cell.Length);
+
+            Instantiate(enemies, cell[random].transform.position, Quaternion.identity);
+
+            print(cell[random]);
+        }
     }
 }
