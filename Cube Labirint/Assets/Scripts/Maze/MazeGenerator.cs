@@ -35,6 +35,7 @@ public class MazeGenerator
 
         maze.cells = cells;
         maze.finishPosition = PlaceMazeExit(cells);
+        GameManager.Instance.SpawnFinish(PlaceMazeExit(cells));
 
         return maze;
     }

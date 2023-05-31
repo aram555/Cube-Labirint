@@ -13,11 +13,23 @@ public class MazeSpawner : MonoBehaviour
 
     private void Start()
     {
+        Create();
+    }
+
+    public void Create() {
         CreateMaze();
         CreateEnemies();
+
+        GameManager.Instance.ReloadSurface();
     }
 
     public void CreateMaze() {
+        GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
+        if(cell.Length > 0) {
+            foreach(GameObject c in cell) {
+                Destroy(c);
+            }
+        }
         MazeGenerator generator = new MazeGenerator();
         maze = generator.GenerateMaze();
 
@@ -39,8 +51,6 @@ public class MazeSpawner : MonoBehaviour
             int random = Random.Range(0, cell.Length);
 
             Instantiate(enemies, cell[random].transform.position, Quaternion.identity);
-
-            print(cell[random]);
         }
     }
 }

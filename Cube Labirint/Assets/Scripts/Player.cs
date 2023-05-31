@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float speed;
 
     Rigidbody rb;
+    public MazeSpawner mazeSpawner;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(HP <= 0) Destroy(this.gameObject);
     }
 
     private void FixedUpdate() {
@@ -30,5 +31,16 @@ public class Player : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         rb.AddForce(new Vector3(x * speed, rb.velocity.y, z * speed));
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        Enemy enemy = other.collider.GetComponent<Enemy>();
+        if(enemy) HP -= enemy.damage;
+
+        if(other.collider.CompareTag("Finish")) {
+            mazeSpawner.Create();
+            transform.position = new Vector3(0, 0, 0);
+        }
+        
     }
 }
