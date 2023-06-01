@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 
 public class MazeSpawner : MonoBehaviour
 {
@@ -11,19 +12,31 @@ public class MazeSpawner : MonoBehaviour
 
     public Maze maze;
 
+    public float sTimer;
+    private float newTimer;
+
     private void Start()
     {
+        newTimer = sTimer;
         Create();
     }
 
     public void Create() {
         CreateMaze();
-        CreateEnemies();
-
         GameManager.Instance.ReloadSurface();
+        CreateEnemies();
+        
     }
 
     public void CreateMaze() {
+        enemiesCount = Random.Range(1, 5);
+        GameObject[] enem = GameObject.FindGameObjectsWithTag("Enemy");
+        if(enem.Length > 0) {
+            foreach(GameObject e in enem) {
+                Destroy(e);
+            }
+        }
+
         GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
         if(cell.Length > 0) {
             foreach(GameObject c in cell) {
@@ -43,6 +56,8 @@ public class MazeSpawner : MonoBehaviour
                 c.WallBottom.SetActive(maze.cells[x, y].WallBottom);
             }
         }
+
+        Thread.Sleep(2);
     }
 
     public void CreateEnemies() {

@@ -392,6 +392,7 @@ MonoBehaviour:
   CellSize: {x: 2, y: 0, z: 2}
   enemies: {fileID: 1604539952802626924, guid: ecd0fb136db81ac4ebce979dcfa38c57, type: 3}
   enemiesCount: 2
+  sTimer: 1
 --- !u!4 &475388813
 Transform:
   m_ObjectHideFlags: 0
@@ -425,7 +426,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -433,7 +434,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.23333333
+  m_VoxelSize: 0.05
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!114 &475388815

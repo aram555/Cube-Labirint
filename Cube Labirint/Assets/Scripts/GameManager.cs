@@ -11,9 +11,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
 
     MazeSpawner mazeSpawner;
+    private void Awake() {
+        Instance = this;
+    }
     void Start()
     {
-        Instance = this;
         mazeSpawner = new MazeSpawner();
     }
 
