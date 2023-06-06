@@ -9,9 +9,7 @@ public class MazeSpawner : MonoBehaviour
     public Vector3 CellSize = new Vector3(1,1,0);
     [Header("NavMesh")]
     public NavMeshSurface[] surfaces;
-    public float sTimer;
     public bool surface;
-    private float newTimer;
 
     [Header("Enemies and Dangerous")]
     public GameObject enemies;
@@ -21,17 +19,13 @@ public class MazeSpawner : MonoBehaviour
 
     private void Start()
     {
-        newTimer = sTimer;
         Create();
     }
 
     private void Update() {
         if(surface) {
-            sTimer--;
-            if(sTimer <= 0) {
-                ReloadSurface();
-                surface = false;
-            }
+            ReloadSurface();
+            surface = false;
         }
     }
 
@@ -46,7 +40,6 @@ public class MazeSpawner : MonoBehaviour
         for (int i = 0; i < surfaces.Length; i++) {
             surfaces[i].BuildNavMesh();
         }
-        sTimer = newTimer;
     }
 
     public void CreateMaze() {
