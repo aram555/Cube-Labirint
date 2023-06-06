@@ -1,19 +1,23 @@
 ﻿using System.Threading;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MazeSpawner : MonoBehaviour
 {
     [Header("Maze")]
     public Cell CellPrefab;
     public Vector3 CellSize = new Vector3(1,1,0);
+    [Header("NavMesh")]
+    public NavMeshSurface[] surfaces;
+    public float sTimer;
+    public bool surface;
+    private float newTimer;
+
     [Header("Enemies and Dangerous")]
     public GameObject enemies;
     public int enemiesCount;
 
     public Maze maze;
-
-    public float sTimer;
-    private float newTimer;
 
     private void Start()
     {
@@ -21,11 +25,28 @@ public class MazeSpawner : MonoBehaviour
         Create();
     }
 
+    private void Update() {
+        if(surface) {
+            sTimer--;
+            if(sTimer <= 0) {
+                ReloadSurface();
+                surface = false;
+            }
+        }
+    }
+
     public void Create() {
+        surface = true;
         CreateMaze();
-        GameManager.Instance.ReloadSurface();
+        ReloadSurface();
         CreateEnemies();
-        
+    }
+
+    public void ReloadSurface() {
+        for (int i = 0; i < surfaces.Length; i++) {
+            surfaces[i].BuildNavMesh();
+        }
+        sTimer = newTimer;
     }
 
     public void CreateMaze() {
@@ -43,6 +64,7 @@ public class MazeSpawner : MonoBehaviour
                 Destroy(c);
             }
         }
+
         MazeGenerator generator = new MazeGenerator();
         maze = generator.GenerateMaze();
 
@@ -56,8 +78,6 @@ public class MazeSpawner : MonoBehaviour
                 c.WallBottom.SetActive(maze.cells[x, y].WallBottom);
             }
         }
-
-        Thread.Sleep(2);
     }
 
     public void CreateEnemies() {

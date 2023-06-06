@@ -390,9 +390,11 @@ MonoBehaviour:
   CellPrefab: {fileID: 6080313961483907904, guid: 465c240ef6fbc0f43a882855571b5a5f,
     type: 3}
   CellSize: {x: 2, y: 0, z: 2}
+  surfaces:
+  - {fileID: 475388814}
   enemies: {fileID: 1604539952802626924, guid: ecd0fb136db81ac4ebce979dcfa38c57, type: 3}
   enemiesCount: 2
-  sTimer: 1
+  sTimer: 5
 --- !u!4 &475388813
 Transform:
   m_ObjectHideFlags: 0
@@ -449,8 +451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ea3f293b667014b920b8822f2ce89d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaces:
-  - {fileID: 475388814}
   finish: {fileID: 1358187399}
 --- !u!1 &832575517
 GameObject:

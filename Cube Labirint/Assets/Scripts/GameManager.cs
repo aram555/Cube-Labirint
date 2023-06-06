@@ -6,10 +6,8 @@ using UnityEngine.AI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public NavMeshSurface[] surfaces;
     public Transform finish;
-    // Start is called before the first frame update
-
+    
     MazeSpawner mazeSpawner;
     private void Awake() {
         Instance = this;
@@ -23,12 +21,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void ReloadSurface() {
-        for (int i = 0; i < surfaces.Length; i++) {
-            surfaces[i].BuildNavMesh();
-        }
     }
 
     public void SpawnFinish(Vector2Int finishPos) {
