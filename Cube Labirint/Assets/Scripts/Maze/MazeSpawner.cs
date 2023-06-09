@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,7 @@ public class MazeSpawner : MonoBehaviour
     [Header("Maze")]
     public Cell CellPrefab;
     public Vector3 CellSize = new Vector3(1,1,0);
+    public float timer;
     [Header("NavMesh")]
     public NavMeshSurface[] surfaces;
     public bool surface;
@@ -31,9 +33,9 @@ public class MazeSpawner : MonoBehaviour
 
     public void Create() {
         surface = true;
-        CreateMaze();
-        ReloadSurface();
-        CreateEnemies();
+        StartCoroutine(CreateMaze());
+        //ReloadSurface();
+        //CreateEnemies();
     }
 
     public void ReloadSurface() {
@@ -42,7 +44,7 @@ public class MazeSpawner : MonoBehaviour
         }
     }
 
-    public void CreateMaze() {
+    public IEnumerator CreateMaze() {
         enemiesCount = Random.Range(1, 5);
         GameObject[] enem = GameObject.FindGameObjectsWithTag("Enemy");
         if(enem.Length > 0) {
@@ -65,13 +67,19 @@ public class MazeSpawner : MonoBehaviour
         {
             for (int y = 0; y < maze.cells.GetLength(1); y++)
             {
-                Cell c = Instantiate(CellPrefab, new Vector3(x * CellSize.x, y * CellSize.y, y * CellSize.z), Quaternion.identity);
+                Cell c = Instantiate(CellPrefab, new Vector3(x * CellSize.x, (y * CellSize.y) + 10, y * CellSize.z), Quaternion.identity);
 
                 c.WallLeft.SetActive(maze.cells[x, y].WallLeft);
                 c.WallBottom.SetActive(maze.cells[x, y].WallBottom);
+                yield return new WaitForSeconds(timer);
             }
+            yield return new WaitForSeconds(timer);
         }
+        yield return new WaitForSeconds(1);
+        ReloadSurface();
+        CreateEnemies();
     }
+
 
     public void CreateEnemies() {
         for(int i = 0; i < enemiesCount; i++) {

@@ -109,7 +109,9 @@ GameObject:
   - component: {fileID: 5646883388278242927}
   - component: {fileID: 4416010303730279637}
   - component: {fileID: 5055092066982123102}
+  - component: {fileID: 2123647562693059051}
   - component: {fileID: 6080313961483907904}
+  - component: {fileID: 8180059867183246649}
   m_Layer: 3
   m_Name: Maze
   m_TagString: Cell
@@ -197,6 +199,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2123647562693059051
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4369353126572847129}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!114 &6080313961483907904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +229,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallLeft: {fileID: 4114060539690375832}
   WallBottom: {fileID: 6486239129857414193}
+--- !u!114 &8180059867183246649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4369353126572847129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7e146f29dab2a40bdc103cdd1759a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  isGround: 0
 --- !u!1 &6486239129857414193
 GameObject:
   m_ObjectHideFlags: 0
