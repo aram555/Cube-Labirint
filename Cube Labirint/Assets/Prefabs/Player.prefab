@@ -128,4 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 5
-  speed: 10
+  speed: 2
+  ammo: 10
+  mazeSpawner: {fileID: 0}
