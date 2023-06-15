@@ -678,6 +678,11 @@ PrefabInstance:
       propertyPath: mazeSpawner
       value: 
       objectReference: {fileID: 475388812}
+    - target: {fileID: 9201322593920261018, guid: 31209d02ba198cf4d9e54b981e4ff033,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 9201322593920261019, guid: 31209d02ba198cf4d9e54b981e4ff033,
         type: 3}
       propertyPath: m_RootOrder

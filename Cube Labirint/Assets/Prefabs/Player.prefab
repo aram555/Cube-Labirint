@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 9201322593920261008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,5 +129,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 5
   speed: 2
+  jumpSpeed: 10
+  jumpDistance: 10
+  jumpHeight: 10
+  jumpPos: {x: 0, y: 0, z: 0}
+  jump: 0
+  jumping: 0
+  freeze: 0
+  destroy: 0
+  distracting: 0
   ammo: 10
-  mazeSpawner: {fileID: 0}
+  deathAmmo: 3
+  distractingAmmo: 5

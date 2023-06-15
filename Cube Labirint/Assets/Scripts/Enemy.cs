@@ -8,7 +8,13 @@ public class Enemy : MonoBehaviour
     [Header("Stats")]
     public float navTimer;
     public float damage;
-    private float newNavTimer;
+    
+    [Header("Enemy Type")]
+    public EnemyTypes enemy;
+    public enum EnemyTypes {Simpleton, Experienced, Deathly}
+    [Header("EXP Pos")]
+    public Transform firstPos;
+    public Transform secondPos;
 
     private bool damaged;
     private float damageTimer;
@@ -17,33 +23,68 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        Destinate();
 
-        newNavTimer = navTimer;
+        switch(enemy) {
+            case EnemyTypes.Simpleton:
+                Simpleton();
+                break;
+            case EnemyTypes.Experienced:
+                Experienced();
+                break;
+            case EnemyTypes.Deathly:
+                Deathly();
+                break;
+        }
     }
-
     // Update is called once per frame
     void Update()
     {
-        navTimer -= Time.deltaTime;
-        if(navTimer <= 0) {
-            Destinate();
-            navTimer = newNavTimer;
-        }
+        
+    }
+
+    //Enemy Type
+    private void Simpleton() {
+        StartCoroutine(Destinate());
+    }
+    private void Experienced() {
+        GameObject[] destinatePoints = GameObject.FindGameObjectsWithTag("Cell");
+        int first = Random.Range(0, destinatePoints.Length);
+        int second = Random.Range(0, destinatePoints.Length);
+
+        firstPos = destinatePoints[first].transform;
+        secondPos = destinatePoints[second].transform;
+
+        StartCoroutine(Destinate(firstPos, secondPos));
+    }
+    private void Deathly() {
+
+    }
+
+    //Restart and Damage
+
+    private void Set(bool set) {
+        GetComponent<BoxCollider>().enabled = set;
+        GetComponent<NavMeshAgent>().enabled = set;
     }
 
     public void GetDamage(int Ammo) {
-        if(Ammo <= 0) return;
-
-        GetComponent<BoxCollider>().enabled = false;
-        GetComponent<NavMeshAgent>().enabled = false;
-
+        Set(false);
         StartCoroutine(RestartEnemy());
     }
 
+    public void Distract(int DistractAmmo) {
+        GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
+        int random = Random.Range(0, cell.Length);
+
+        agent.SetDestination(cell[random].transform.position);
+    }
+    
+    public void DestroyEnemy(int DeathAmmo) {
+        Set(false);
+    }
+
     private void Restart() {
-        GetComponent<BoxCollider>().enabled = true;
-        GetComponent<NavMeshAgent>().enabled = true;
+        Set(true);
     }
 
     IEnumerator RestartEnemy() {
@@ -51,11 +92,35 @@ public class Enemy : MonoBehaviour
         Restart();
     }
 
-    private void Destinate() {
-        if(!agent.enabled) return;
-        GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
-        int random = Random.Range(0, cell.Length);
+    //Destinate Functions
+    private IEnumerator Destinate() {
+        while(true) {
+            if(!agent.enabled) break;
+            GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
+            int random = Random.Range(0, cell.Length);
 
-        agent.SetDestination(cell[random].transform.position);
+            agent.SetDestination(cell[random].transform.position);
+
+            yield return new WaitForSeconds(navTimer);
+        }
+    }
+    private IEnumerator Destinate(Transform firstDestinatePoints, Transform secondDestinatePoints) {
+        while(true) {
+            if(!agent.enabled) break;
+
+            agent.SetDestination(firstDestinatePoints.position);
+            yield return new WaitForSeconds(navTimer);
+
+            agent.SetDestination(secondDestinatePoints.position);
+            yield return new WaitForSeconds(navTimer);
+        }
+    }
+    private IEnumerator Destinate(GameObject Player) {
+        while(true) {
+            if(!agent.enabled) break;
+            agent.SetDestination(Player.transform.position);
+
+            yield return new WaitForSeconds(navTimer);
+        }
     }
 }
