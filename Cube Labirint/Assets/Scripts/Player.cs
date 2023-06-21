@@ -6,22 +6,22 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [Header("Stats")]
-    public float HP;
-    public float speed;
-    [Header("Jump")]
-    public float jumpSpeed;
-    public float jumpDistance;
-    public float jumpHeight;
-    public Vector3 jumpPos;
-    public bool jump;
-    public bool jumping;
+    [SerializeField] private float HP;
+    [SerializeField] private float speed;
+    [Header("Teleport")]
+    [SerializeField] private int cost;
+    [SerializeField] private float distance;
+    [SerializeField] private bool teleport;
     [Header("Weapons")]
-    public bool freeze;
-    public bool destroy;
-    public bool distracting;
-    public int ammo;
-    public int deathAmmo;
-    public int distractingAmmo;
+    [SerializeField] private bool freeze;
+    [SerializeField] private bool destroy;
+    [SerializeField] private bool distracting;
+    [SerializeField] private int ammo;
+    [SerializeField] private int deathAmmo;
+    [SerializeField] private int distractingAmmo;
+    [Header("Spec Weapons")]
+    [SerializeField] private bool destroyWall;
+    [SerializeField] private int destroyCount;
 
     Rigidbody rb;
     Camera cam;
@@ -29,47 +29,54 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        cam = Camera.main;
-        mazeSpawner = GameObject.Find("Game Manager").GetComponent<MazeSpawner>();
-        jumpPos = transform.position;
+        rb              = GetComponent<Rigidbody>();
+        cam             = Camera.main;
+        mazeSpawner     = GameObject.Find("Game Manager").GetComponent<MazeSpawner>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(HP <= 0) Restart();
+        if (HP <= 0) Restart();
 
-        //Fire
-        if(Input.GetMouseButtonDown(0)) {
+        //Fire and Teleport
+        if (Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
-            if(Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity)) {
-                if(jump) {
-                    jumpPos = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-                    if(Vector3.Distance(transform.position, jumpPos) > jumpDistance) return;
-
-                    jumping = true;
-                    //jump = false;
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity)) {
+                if (teleport) {
+                    if (hit.collider.GetComponent<Cell>() && Vector3.Distance(transform.position, hit.point) < distance) {
+                        transform.position = hit.point;
+                        teleport = false;
+                    }
+                    else return;
                 }
 
-                if(hit.collider.CompareTag("Enemy")) {
+                if (destroyWall && destroyCount >= 1) {
+                    if (hit.collider.name == "Left" || hit.collider.name == "Bottom") {
+                        Destroy(hit.collider.gameObject);
+                        destroyWall = false;
+                        destroyCount--;
+                    }
+                }
+                
+                if (hit.collider.CompareTag("Enemy")) {
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
-                    if(freeze) {
-                        if(ammo <= 0 || enemy.enemy != Enemy.EnemyTypes.Simpleton) return;
+                    if (freeze) {
+                        if (ammo <= 0 || enemy.enemy != Enemy.EnemyTypes.Simpleton) return;
 
                         ammo--;
                         enemy.GetDamage(ammo);
                         freeze = false;
                     }
-                    else if(destroy) {
-                        if(deathAmmo <= 0 || enemy.enemy != Enemy.EnemyTypes.Simpleton) return;
+                    else if (destroy) {
+                        if (deathAmmo <= 0 || enemy.enemy != Enemy.EnemyTypes.Simpleton) return;
 
                         deathAmmo--;
                         enemy.DestroyEnemy(deathAmmo);
                         destroy = false;
                     }
-                    else if(distracting) {
-                        if(distractingAmmo <= 0 || enemy.enemy != Enemy.EnemyTypes.Simpleton) return;
+                    else if (distracting) {
+                        if (distractingAmmo <= 0 || enemy.enemy != Enemy.EnemyTypes.Simpleton) return;
 
                         distractingAmmo--;
                         enemy.Distract(distractingAmmo);
@@ -78,27 +85,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        if(jumping) {
-            Jump(jumpPos);
-            if(Vector3.Distance(transform.position, jumpPos) <= 1.2f) jumping = false; 
-        }
     }
-
-    //Jump
-    public void JumpButton() {
-        jump = true;
-    }
-    private void Jump(Vector3 dir) {
-        float posY = Mathf.Abs(dir.z - transform.position.z);
-        Vector3 jumpPos = new Vector3(dir.x, jumpHeight + posY, dir.z);
-        transform.position = Vector3.MoveTowards(transform.position, jumpPos, jumpSpeed * Time.deltaTime);
-    }
-
-    private void Restart() {
-        SceneManager.LoadScene(0);
-    }
-
     private void FixedUpdate() {
         Move();
     }
@@ -109,25 +96,36 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(x * speed, rb.velocity.y, z * speed);
     }
 
+    //Buttons
+    public void Teleport() {
+        teleport = true;
+    }
+    public void ResetPos() {
+        transform.position = new Vector3(0, 10, 0);
+    }
+
+    private void Restart() {
+        SceneManager.LoadScene(0);
+    }
     private void OnCollisionEnter(Collision other) {
-        Enemy enemy = other.collider.GetComponent<Enemy>();
+        Enemy enemy   = other.collider.GetComponent<Enemy>();
         if(enemy) HP -= enemy.damage;
 
         if(other.collider.CompareTag("Finish")) {
             ammo = 10;
             mazeSpawner.Create();
-            transform.position = new Vector3(0, 10, 0);
+            ResetPos();
         }
         
     }
 
     //Weapons
     public void Freeze() {
-        freeze = true;
+        freeze  = true;
         destroy = false;
     }
     public void DestroyEnemy() {
         destroy = true;
-        freeze = false;
+        freeze  = false;
     }
 }

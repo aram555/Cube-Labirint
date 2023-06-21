@@ -19,10 +19,11 @@ public class Enemy : MonoBehaviour
     private bool damaged;
     private float damageTimer;
     NavMeshAgent agent;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent  = GetComponent<NavMeshAgent>();
 
         switch(enemy) {
             case EnemyTypes.Simpleton:
@@ -57,7 +58,8 @@ public class Enemy : MonoBehaviour
         StartCoroutine(Destinate(firstPos, secondPos));
     }
     private void Deathly() {
-
+        player = GameObject.Find("Player");
+        StartCoroutine(Destinate(player));
     }
 
     //Restart and Damage

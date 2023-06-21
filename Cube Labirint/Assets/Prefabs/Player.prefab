@@ -129,15 +129,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 5
   speed: 2
-  jumpSpeed: 10
-  jumpDistance: 10
-  jumpHeight: 10
-  jumpPos: {x: 0, y: 0, z: 0}
-  jump: 0
-  jumping: 0
+  cost: 0
+  distance: 10
+  teleport: 0
   freeze: 0
   destroy: 0
   distracting: 0
   ammo: 10
   deathAmmo: 3
   distractingAmmo: 5
+  destroyWall: 0
+  destroyCount: 1
