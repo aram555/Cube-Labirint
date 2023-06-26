@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        agent  = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         switch(enemy) {
             case EnemyTypes.Simpleton:
@@ -49,17 +49,17 @@ public class Enemy : MonoBehaviour
     }
     private void Experienced() {
         GameObject[] destinatePoints = GameObject.FindGameObjectsWithTag("Cell");
-        int first = Random.Range(0, destinatePoints.Length);
+        int first  = Random.Range(0, destinatePoints.Length);
         int second = Random.Range(0, destinatePoints.Length);
 
-        firstPos = destinatePoints[first].transform;
+        firstPos  = destinatePoints[first].transform;
         secondPos = destinatePoints[second].transform;
 
         StartCoroutine(Destinate(firstPos, secondPos));
     }
     private void Deathly() {
         player = GameObject.Find("Player");
-        StartCoroutine(Destinate(player));
+        StartCoroutine (Destinate(player));
     }
 
     //Restart and Damage

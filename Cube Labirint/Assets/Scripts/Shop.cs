@@ -22,7 +22,7 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) PlayerPrefs.DeleteAll();
+        // if(Input.GetKeyDown(KeyCode.Space)) PlayerPrefs.DeleteAll();
     }
 
     public void Buy(string nameID) {

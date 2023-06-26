@@ -16,6 +16,12 @@ public class MazeSpawner : MonoBehaviour
     [Header("Enemies and Dangerous")]
     public GameObject enemies;
     public int enemiesCount;
+    
+    [Header("BackGround and Walls")]
+    [SerializeField] private Color[] colors;
+    [SerializeField] private Material Gradient;
+    [SerializeField] private Material Ground;
+    [SerializeField] private Material Walls;
 
     public Maze maze;
 
@@ -33,6 +39,7 @@ public class MazeSpawner : MonoBehaviour
 
     public void Create() {
         surface = true;
+        SetColor();
         StartCoroutine(CreateMaze());
         //ReloadSurface();
         //CreateEnemies();
@@ -42,6 +49,15 @@ public class MazeSpawner : MonoBehaviour
         for (int i = 0; i < surfaces.Length; i++) {
             surfaces[i].BuildNavMesh();
         }
+    }
+
+    public void SetColor() {
+        int randomOne = Random.Range(0, colors.Length);
+        int randomTwo = Random.Range(0, colors.Length);
+        Gradient.SetColor("_Top", colors[randomOne]);
+        Gradient.SetColor("_Bottom", colors[randomTwo]);
+        Walls.color  = colors[randomOne];
+        Ground.color = colors[randomTwo];
     }
 
     public IEnumerator CreateMaze() {

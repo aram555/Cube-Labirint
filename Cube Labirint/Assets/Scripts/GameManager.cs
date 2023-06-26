@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public Transform finish;
+    [SerializeField] private Transform finish;
     
     MazeSpawner mazeSpawner;
     private void Awake() {
@@ -25,6 +25,5 @@ public class GameManager : MonoBehaviour
 
     public void SpawnFinish(Vector2Int finishPos) {
         finish.position = new Vector3(finishPos.x*2, finish.position.y, finishPos.y*2);
-        print("rjiwajrioaw");
     }
 }
