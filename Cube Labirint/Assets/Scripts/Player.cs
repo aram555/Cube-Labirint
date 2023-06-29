@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -28,10 +29,15 @@ public class Player : MonoBehaviour
     [SerializeField] private Color distractColor;
     [SerializeField] private GameObject hitPartcle;
     [SerializeField] private GameObject destroyhWallParticle;
+    [Header("Shaders")]
+    [SerializeField] private Color show;
+    [SerializeField] private Shader showEnemy;
+    [SerializeField] private Shader enemyMat;
 
     Rigidbody rb;
     Camera cam;
     MazeSpawner mazeSpawner;
+    GameObject[] enemys;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +49,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.R)) mazeSpawner.Create();
         if (HP <= 0) Restart();
 
         //Fire and Teleport
@@ -77,6 +84,7 @@ public class Player : MonoBehaviour
 
                         ammo--;
                         enemy.GetDamage(ammo);
+                        SetEnemySpeed(enemys, 5, false);
                         freeze = false;
                     }
                     else if (destroy) {
@@ -88,6 +96,7 @@ public class Player : MonoBehaviour
 
                         deathAmmo--;
                         enemy.DestroyEnemy(deathAmmo);
+                        SetEnemySpeed(enemys, 5, false);
                         destroy = false;
                     }
                     else if (distracting) {
@@ -99,6 +108,7 @@ public class Player : MonoBehaviour
 
                         distractingAmmo--;
                         enemy.Distract(distractingAmmo);
+                        SetEnemySpeed(enemys, 5, false);
                         distracting = false;
                     }
                 }
@@ -135,21 +145,42 @@ public class Player : MonoBehaviour
             mazeSpawner.Create();
             ResetPos();
         }
-        
+
+        if(other.collider.CompareTag("Ground")) ResetPos();
     }
 
+    private GameObject[] GetEnemy(GameObject[] enemy) {
+        enemy = GameObject.FindGameObjectsWithTag("Enemy");
+
+        return enemy;
+    }
+    private void SetEnemySpeed(GameObject[] e, int n, bool set) {
+        foreach(GameObject E in e) {
+            E.GetComponent<NavMeshAgent>().speed = n;
+            E.GetComponent<Enemy>().isDamage = set;
+        }
+    }
     //Weapons
     public void Freeze() {
+        enemys = GetEnemy(enemys);
+        SetEnemySpeed(enemys, 0, true);
+
         freeze      = true;
         destroy     = false;
         distracting = false;
     }
     public void DestroyEnemy() {
+        enemys = GetEnemy(enemys);
+        SetEnemySpeed(enemys, 0, true);
+
         destroy     = true;
         freeze      = false;
         distracting = false;
     }
     public void Distract() {
+        enemys = GetEnemy(enemys);
+        SetEnemySpeed(enemys, 0, true);
+
         destroy     = false;
         freeze      = false;
         distracting = true;

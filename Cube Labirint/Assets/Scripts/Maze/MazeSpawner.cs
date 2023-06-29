@@ -18,6 +18,7 @@ public class MazeSpawner : MonoBehaviour
     public int enemiesCount;
     
     [Header("BackGround and Walls")]
+    [SerializeField] private GameObject backgroundParticle;
     [SerializeField] private Color[] colors;
     [SerializeField] private Material Gradient;
     [SerializeField] private Material Ground;
@@ -54,10 +55,17 @@ public class MazeSpawner : MonoBehaviour
     public void SetColor() {
         int randomOne = Random.Range(0, colors.Length);
         int randomTwo = Random.Range(0, colors.Length);
+
+        if(randomTwo == randomOne) randomTwo = Random.Range(0, colors.Length);
+        
         Gradient.SetColor("_Top", colors[randomOne]);
         Gradient.SetColor("_Bottom", colors[randomTwo]);
+
         Walls.color  = colors[randomOne];
         Ground.color = colors[randomTwo];
+
+        ParticleSystem.MainModule backP = backgroundParticle.GetComponent<ParticleSystem>().main;
+        backP.startColor = new ParticleSystem.MinMaxGradient(colors[randomOne], colors[randomTwo]);
     }
 
     public IEnumerator CreateMaze() {

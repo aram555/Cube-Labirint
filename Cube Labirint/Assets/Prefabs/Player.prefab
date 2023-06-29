@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 9201322593920261014}
   - component: {fileID: 9201322593920261018}
   - component: {fileID: 9201322593920261015}
+  - component: {fileID: 7024766911508855613}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -288,3 +289,25 @@ MonoBehaviour:
     type: 3}
   destroyhWallParticle: {fileID: 2706708288166743277, guid: 91778efb019907045898cfb89e65a007,
     type: 3}
+  show: {r: 1, g: 0.74242955, b: 0.5330188, a: 0}
+  showEnemy: {fileID: -6465566751694194690, guid: c16fca548523adc4f825aa0947445c19,
+    type: 3}
+  enemyMat: {fileID: 0}
+--- !u!114 &7024766911508855613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9201322593920261008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.3160377, g: 0.49817276, b: 1, a: 1}
+  outlineWidth: 8
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

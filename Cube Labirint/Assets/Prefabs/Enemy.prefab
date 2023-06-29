@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3720074542415883201}
   - component: {fileID: 7995887190076469145}
   - component: {fileID: 2963481740313466567}
+  - component: {fileID: 7867675433790330670}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -134,11 +135,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f170645e774a564290d84c0c2b0e512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navTimer: 20
+  navTimer: 10
   damage: 1
+  isDamage: 0
   enemy: 0
   firstPos: {fileID: 0}
   secondPos: {fileID: 0}
+  destroyColor: {r: 1, g: 0.49045706, b: 0.2783019, a: 0}
+  freezeColor: {r: 0.39999998, g: 0.8855631, b: 1, a: 0}
+  selectColor: {r: 1, g: 0.23921567, b: 0.9523291, a: 0}
+--- !u!114 &7867675433790330670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604539952802626924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.67858344, b: 0.5137255, a: 1}
+  outlineWidth: 8
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5005260679447935732
 GameObject:
   m_ObjectHideFlags: 0
