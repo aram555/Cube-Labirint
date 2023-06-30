@@ -58,8 +58,6 @@ public class Enemy : MonoBehaviour
             rend.material.SetColor("_MainColor", selectColor);
         }
         else if(agent.enabled) rend.material.shader = enemyLit;
-        else if(!agent.enabled) return;
-        else return;
     }
 
     //Enemy Type
@@ -91,6 +89,7 @@ public class Enemy : MonoBehaviour
         Set(false);
         StartCoroutine(RestartEnemy());
         rend.material.shader = holograph;
+        rend.material.SetColor("_MainColor", freezeColor);
     }
     public void Distract(int DistractAmmo) {
         GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
@@ -108,7 +107,6 @@ public class Enemy : MonoBehaviour
     private void Restart() {
         Set(true);
         rend.material.shader = enemyLit;
-        rend.material.SetColor("_MainColor", freezeColor);
     }
 
     IEnumerator RestartEnemy() {
