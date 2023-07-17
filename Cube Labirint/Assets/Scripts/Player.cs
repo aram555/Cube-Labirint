@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private float HP;
     [SerializeField] private float speed;
+    [Header("Joystick")]
+    [SerializeField] private Joystick joystick;
     [Header("Teleport")]
     [SerializeField] private int cost;
     [SerializeField] private float distance;
@@ -119,8 +121,8 @@ public class Player : MonoBehaviour
         Move();
     }
     void Move() {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = joystick.Horizontal;
+        float z = joystick.Vertical;
 
         rb.velocity = new Vector3(z * speed, rb.velocity.y, -x * speed);
     }
