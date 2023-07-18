@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class MazeSpawner : MonoBehaviour
 {
     [Header("Maze")]
-    public Cell CellPrefab;
+    public GameObject CellPrefab;
     public Vector3 CellSize = new Vector3(1,1,0);
     public float timer;
     [Header("NavMesh")]
@@ -40,8 +40,8 @@ public class MazeSpawner : MonoBehaviour
 
     public void Create() {
         surface = true;
-        SetColor();
         StartCoroutine(CreateMaze());
+        //SetColor();
         //ReloadSurface();
         //CreateEnemies();
     }
@@ -80,9 +80,12 @@ public class MazeSpawner : MonoBehaviour
         GameObject[] cell = GameObject.FindGameObjectsWithTag("Cell");
         if(cell.Length > 0) {
             foreach(GameObject c in cell) {
-                Destroy(c);
+                c.GetComponent<WallTraffic>().Traffic(false, true);
+                yield return new WaitForSeconds(timer);
             }
+            yield return new WaitForSeconds(1);
         }
+        SetColor();
 
         MazeGenerator generator = new MazeGenerator();
         maze = generator.GenerateMaze();
@@ -91,15 +94,17 @@ public class MazeSpawner : MonoBehaviour
         {
             for (int y = 0; y < maze.cells.GetLength(1); y++)
             {
-                Cell c = Instantiate(CellPrefab, new Vector3(x * CellSize.x, (y * CellSize.y) + 10, y * CellSize.z), Quaternion.identity);
+                GameObject C = Instantiate(CellPrefab, new Vector3(x * CellSize.x, (y * CellSize.y), y * CellSize.z), Quaternion.identity);
+                Cell c = C.transform.GetChild(0).GetComponent<Cell>();
 
                 c.WallLeft.SetActive(maze.cells[x, y].WallLeft);
                 c.WallBottom.SetActive(maze.cells[x, y].WallBottom);
+                c.GetComponent<WallTraffic>().Traffic(true, false);
                 yield return new WaitForSeconds(timer);
             }
             yield return new WaitForSeconds(timer);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         ReloadSurface();
         CreateEnemies();
     }

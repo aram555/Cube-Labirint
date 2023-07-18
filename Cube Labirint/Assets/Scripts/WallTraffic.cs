@@ -4,32 +4,33 @@ using UnityEngine;
 
 public class WallTraffic : MonoBehaviour
 {
-    [Header("Spped and ground")]
-    public float speed;
-    public bool isGround;
-
-    Rigidbody rb;
+    [Header("Booleans")]
+    [SerializeField] private bool start;
+    [SerializeField] private bool end;
+    Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isGround) GoBottom();
+        if(start) anim.Play("Start");
+        else if(end) anim.Play("End");
+        else anim.Play("Idle");
     }
 
-    private void GoBottom() {
-        transform.Translate(0, -speed * Time.deltaTime, 0);
+    public void StartTraffic() {
+        start = false;
+    }
+    public void DestroyWall() {
+        Destroy(this.transform.parent.gameObject);
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.collider.CompareTag("Ground")) {
-            isGround = true;
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        }
+    public void Traffic(bool startTraffic, bool endTraffic) {
+        start = startTraffic;
+        end   = endTraffic;
     }
 }

@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
         teleport = true;
     }
     public void ResetPos() {
-        transform.position = new Vector3(0, 10, 0);
+        transform.position = new Vector3(0, 3, 0);
     }
 
     private void Restart() {

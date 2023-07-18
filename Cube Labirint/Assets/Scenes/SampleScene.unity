@@ -5212,7 +5212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41afc2e5f9ee0aa499e88038d52ca627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CellPrefab: {fileID: 6080313961483907904, guid: 465c240ef6fbc0f43a882855571b5a5f,
+  CellPrefab: {fileID: 8913483396462191347, guid: 465c240ef6fbc0f43a882855571b5a5f,
     type: 3}
   CellSize: {x: 2, y: 0, z: 2}
   timer: 0
