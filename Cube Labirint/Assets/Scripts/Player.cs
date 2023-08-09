@@ -31,10 +31,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Color distractColor;
     [SerializeField] private GameObject hitPartcle;
     [SerializeField] private GameObject destroyhWallParticle;
-    [Header("Shaders")]
-    [SerializeField] private Color show;
-    [SerializeField] private Shader showEnemy;
-    [SerializeField] private Shader enemyMat;
 
     Rigidbody rb;
     Camera cam;
@@ -60,7 +56,7 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity)) {
                 if (teleport) {
                     if (hit.collider.GetComponent<Cell>() && Vector3.Distance(transform.position, hit.point) < distance) {
-                        transform.position = hit.point;
+                        transform.position = new Vector3(hit.point.x, hit.point.y + 1, hit.point.z);
                         teleport = false;
                     }
                     else return;
@@ -130,6 +126,9 @@ public class Player : MonoBehaviour
     //Buttons
     public void Teleport() {
         teleport = true;
+    }
+    public void DestroyWall() {
+        destroyWall = true;
     }
     public void ResetPos() {
         transform.position = new Vector3(0, 3, 0);

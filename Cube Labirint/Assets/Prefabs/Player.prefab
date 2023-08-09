@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8379713873174039288}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9201322593920261019}
@@ -83,7 +83,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5
         inSlope: -0.51526314
         outSlope: -0.51526314
         tangentMode: 0
@@ -170,8 +170,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9201322593920261008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3561937712856778557}
@@ -185,7 +185,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9201322593920261008}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -5668833170292645477, guid: 3615bac50c2568e4fa0fe0865d6b082c, type: 3}
 --- !u!23 &9201322593920261013
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -239,8 +239,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!54 &9201322593920261018
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 5
   speed: 2
+  joystick: {fileID: 0}
   cost: 0
   distance: 10
   teleport: 0
@@ -292,7 +293,8 @@ MonoBehaviour:
   show: {r: 1, g: 0.74242955, b: 0.5330188, a: 0}
   showEnemy: {fileID: -6465566751694194690, guid: c16fca548523adc4f825aa0947445c19,
     type: 3}
-  enemyMat: {fileID: 0}
+  enemyMat: {fileID: -6465566751694194690, guid: c16fca548523adc4f825aa0947445c19,
+    type: 3}
 --- !u!114 &7024766911508855613
 MonoBehaviour:
   m_ObjectHideFlags: 0
